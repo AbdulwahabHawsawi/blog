@@ -75,3 +75,18 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+#Arch linux
+*.tar
+*.tar.*
+*.jar
+*.exe
+*.msi
+*.zip
+*.tgz
+*.log
+*.log.*
+*.sig
+
+pkg/
+src/

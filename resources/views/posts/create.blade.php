@@ -3,11 +3,11 @@
 @section('title', "| Create New Post")
 
 @section('css')
-    <link rel="stylesheet" href="/css/parsley.css">
+    <link rel="stylesheet" href="{{asset('css/parsley.css')}}">
 @endsection
 
 @section('scripts')
-    <script src="/js/parsley.js"></script>
+    <script src="{{asset('js/parsley.js')}}"></script>
 @endsection
 
 @section('content')

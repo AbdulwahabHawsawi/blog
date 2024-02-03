@@ -5,16 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Session;
+use Illuminate\Validation\Rule;
 
 
 class PostController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $posts = Post::orderby('id', 'desc')->paginate(2);
+        $posts = Post::orderby('id', 'desc')->paginate(5);
 
         return view('posts.index')->with('posts', $posts);
     }
@@ -35,6 +40,7 @@ class PostController extends Controller
         //validate data
         $this->validate($request, [
             'title' => 'required|max:255',
+            'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
             'body' => 'required'
         ]);
 
@@ -48,11 +54,12 @@ class PostController extends Controller
         $post = new Post;
 
         $post->title = $request->title;
+        $post->slug = $request->slug;
         $post->body = $request->body;
 
         $post->save();
         Session::flash('success', 'The post has been submitted successfully!');
-        
+
         //redirect
         return redirect()->route('posts.show', ['post' => $post->id]);
     }
@@ -80,14 +87,23 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $post = Post::find($id);
+
+        $slugChanged = $post->slug != $request->slug;
+
         $this->validate($request, [
             'title' => 'required|max:255',
+            'slug' => ['required',
+            'alpha_dash',
+            'min:5',
+            'max:255',
+            Rule::when($slugChanged, 'unique')],
+
             'body' => 'required'
         ]);
 
-        $post = Post::find($id);
-
         $post->title = $request->title;
+        $post->slug = $request->slug;
         $post->body = $request->body;
 
         $post->save();

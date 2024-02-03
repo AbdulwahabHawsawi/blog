@@ -1,9 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+
 class PagesController extends Controller {
     public function getIndex() {
-        return view('Pages/welcome');
+        $posts = Post::orderBy('id', 'desc')->take(3)->get();
+        return view('Pages/welcome')->with('posts', $posts);
     }
 
     public function getAbout() {

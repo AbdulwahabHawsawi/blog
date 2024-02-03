@@ -14,6 +14,8 @@
                     @method('PUT')
                     <label for="title">Title: </label>
                     <input class="form-control" type="text" id="title" name="title" value='{{ $post->title }}'>
+                    <label for="slug">Slug: </label>
+                    <input class="form-control" type="text" id="slug" name="slug" value='{{ $post->slug }}'>
                     <label for="body">Post Body: </label>
                     <textarea class="form-control" rows=20 name="body" id="body" data-parsley-required="">{{ $post->body }}</textarea>
                     <div class="d-grid gap-2 my-3">

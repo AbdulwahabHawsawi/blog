@@ -14,45 +14,19 @@
 
 <div class="row">
     <div class="col-md-8">
-        <div class="post">
-            <h2>post title</h2>
-            <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem maiores voluptas molestiae non
-                commodi mollitia repellat eveniet explicabo, fuga alias quisquam vitae neque voluptatum quaerat
-                natus. Asperiores harum non nulla.
-            </p>
-            <div class="btn btn-primary"> Read more</div>
-        </div>
         <hr>
         <div class="post">
-            <h2>post title</h2>
+            @foreach ($posts as $post)
+            <h2>{{ $post->title }}</h2>
             <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem maiores voluptas molestiae non
-                commodi mollitia repellat eveniet explicabo, fuga alias quisquam vitae neque voluptatum quaerat
-                natus. Asperiores harum non nulla.
+                {{ substr($post->body, 0, 50) }}
+                {{ $post->body > 50 ? "..." : "" }}
             </p>
-            <div class="btn btn-primary"> Read more</div>
+            <a class="btn btn-primary" href="{{ url('blog/'.$post->slug) }}">Read More</a>
+            @endforeach
         </div>
         <hr>
-        <div class="post">
-            <h2>post title</h2>
-            <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem maiores voluptas molestiae non
-                commodi mollitia repellat eveniet explicabo, fuga alias quisquam vitae neque voluptatum quaerat
-                natus. Asperiores harum non nulla.
-            </p>
-            <div class="btn btn-primary"> Read more</div>
-        </div>
-        <hr>
-        <div class="post">
-            <h2>post title</h2>
-            <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem maiores voluptas molestiae non
-                commodi mollitia repellat eveniet explicabo, fuga alias quisquam vitae neque voluptatum quaerat
-                natus. Asperiores harum non nulla.
-            </p>
-            <div class="btn btn-primary"> Read more</div>
-        </div>
+       
     </div>
 
     <div class="col-md-3 offset-md-1">

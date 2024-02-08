@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,3 +44,6 @@ Route::get('/forgot-password', [PasswordController::class, 'getForgotPassword'])
 Route::post('/forgot-password', [PasswordController::class, 'postForgotPassword'])->name('password.email');
 Route::get('/reset-password/{token}', [PasswordController::class, 'getResetPassword'])->name('password.reset');
 Route::post('/reset-password', [PasswordController::class, 'postResetPassword'])->name('password.update');
+
+//categories
+Route::resource('categories', CategoryController::class, ['except' => ['create']]);

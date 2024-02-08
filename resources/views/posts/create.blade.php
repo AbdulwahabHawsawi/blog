@@ -1,13 +1,13 @@
 @extends('layouts/main')
 
-@section('title', "| Create New Post")
+@section('title', '| Create New Post')
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('css/parsley.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/parsley.css') }}">
 @endsection
 
 @section('scripts')
-    <script src="{{asset('js/parsley.js')}}"></script>
+    <script src="{{ asset('js/parsley.js') }}"></script>
 @endsection
 
 @section('content')
@@ -19,6 +19,14 @@
                 @csrf
                 <label for="title">Title: </label>
                 <input class="form-control" type="text" id="title" name="title" data-parsley-required="">
+                <label for="category">Category: </label>
+                <select class="form-select" name="category_id">
+                    <option>Select a Category:</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </ul>
+                </select>
                 <label for="slug">Slug: </label>
                 <input class="form-control" type="text" id="title" name="slug" data-parsley-required="">
                 <label for="body">Post Body: </label>
@@ -26,7 +34,7 @@
                 <div class="d-grid gap-2 my-3">
                     <input class="btn btn-success btn-lg btn-block" type="submit" value="Create New Post">
                 </div>
-                
+
             </form>
         </div>
     </div>

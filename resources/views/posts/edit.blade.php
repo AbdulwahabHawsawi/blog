@@ -14,13 +14,20 @@
                     @method('PUT')
                     <label for="title">Title: </label>
                     <input class="form-control" type="text" id="title" name="title" value='{{ $post->title }}'>
+                    <select class="form-select" name="category_id">
+                        <option selected value="{{ $post->category_id }}">{{$post->category->name}}</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </ul>
+                    </select>
                     <label for="slug">Slug: </label>
                     <input class="form-control" type="text" id="slug" name="slug" value='{{ $post->slug }}'>
                     <label for="body">Post Body: </label>
                     <textarea class="form-control" rows=20 name="body" id="body" data-parsley-required="">{{ $post->body }}</textarea>
                     <div class="d-grid gap-2 my-3">
                     </div>
-                    
+
                 </form>
             </div>
         </div>

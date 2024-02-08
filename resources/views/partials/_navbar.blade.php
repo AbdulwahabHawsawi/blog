@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Laravel Blog</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        <button class="navbar-toggler" type="button" data-bs-toggle="dropdown" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,14 +32,13 @@
                 data-bs-toggle="dropdown" aria-expanded="false"> Hello, {{ auth()->user()->name }} </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <li><a class="dropdown-item" href="{{ route('posts.index') }}">Posts</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li><a class="dropdown-item" href="{{ route('categories.index') }}">Categories</a></li>
                 <hr>
                 <form action="{{ route('logout') }}" method="post">
                     @csrf
                     <li><input type='submit' class='dropdown-item' value="Logout"></li>
                 </form>
-                
+
             </ul>
         </li>
     </ul>

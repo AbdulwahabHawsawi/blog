@@ -24,6 +24,7 @@ Route::get('blog/{slug}', [BlogController::class, 'getSingle'])->name('blog.sing
 Route::get('blog', [BlogController::class, 'getIndex'])->name('blog.index');
 
 Route::get('contact', [PagesController::class, 'getContact']);
+Route::post('contact', [PagesController::class, 'postContact']);
 
 Route::get('about', [PagesController::class, 'getAbout']);
 

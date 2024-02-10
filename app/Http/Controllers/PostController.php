@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\Tag;
 use Session;
 use Illuminate\Validation\Rule;
 
@@ -32,8 +33,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-
-        return view('posts/create')->with('categories', $categories);
+        $tags = Tag::all();
+        return view('posts/create')->with('categories', $categories)->with('tags', $tags);
     }
 
     /**
@@ -64,10 +65,13 @@ class PostController extends Controller
         $post->category_id = $request->category_id;
 
         $post->save();
-        Session::flash('success', 'The post has been submitted successfully!');
+
+        $post->tags()->sync($request->tags, false);
+
+        //Session::flash('success', 'The post has been submitted successfully!');
 
         //redirect
-        return redirect()->route('posts.show', ['post' => $post->id]);
+        return redirect()->route('posts.show', ['post' => $post->id])->with('success', 'The post has been submitted successfully!');
     }
 
     /**
@@ -84,9 +88,11 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
+
         $post = Post::find($id);
         $categories = Category::all();
-        return view('posts.edit', ['post' => $id])->with('post', $post)->with('categories', $categories);
+        $tags = Tag::all();
+        return view('posts.edit', ['post' => $id])->with('post', $post)->with('categories', $categories)->with('tags', $tags);
     }
 
     /**
@@ -118,9 +124,9 @@ class PostController extends Controller
 
         $post->save();
 
-        Session::flash('success', 'the post has been updated successfully!');
+        $post->tags()->sync($request->tags);
 
-        return redirect()->route('posts.show', ['post' => $id]);
+        return redirect()->route('posts.show', ['post' => $id])->with('success', 'the post has been updated successfully!');
     }
 
     /**
@@ -130,10 +136,10 @@ class PostController extends Controller
     {
         $post = Post::find($id);
 
+        $post->tags()->detach();
+
         $post->delete();
 
-        Session::flash('success', 'The bost has been deleted!');
-
-        return redirect()->route('posts.index');
+        return redirect()->route('posts.index')->with('success', 'The bost has been deleted!');
     }
 }

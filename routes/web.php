@@ -6,6 +6,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,3 +48,6 @@ Route::post('/reset-password', [PasswordController::class, 'postResetPassword'])
 
 //categories
 Route::resource('categories', CategoryController::class, ['except' => ['create']]);
+
+//tags
+Route::resource('tags', TagController::class, ['except' => ['create']]);

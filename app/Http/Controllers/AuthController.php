@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function getLogin() {
-        
+
         return view('auth/login');
     }
 
@@ -21,12 +21,12 @@ class AuthController extends Controller
         ]);
 
         if(auth()->attempt($credentials)){
-            
+
             $request->session()->regenerate();
-            
+
             return redirect()->route('index');
         }
-        
+
         return redirect()->route('login');
     }
 
@@ -34,7 +34,7 @@ class AuthController extends Controller
         Auth::logout();
 
         $request->session()->invalidate();
- 
+
         $request->session()->regenerateToken();
 
         return redirect('/');

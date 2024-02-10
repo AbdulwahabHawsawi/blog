@@ -33,6 +33,7 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <li><a class="dropdown-item" href="{{ route('posts.index') }}">Posts</a></li>
                 <li><a class="dropdown-item" href="{{ route('categories.index') }}">Categories</a></li>
+                <li><a class="dropdown-item" href="{{ route('tags.index') }}">Tags</a></li>
                 <hr>
                 <form action="{{ route('logout') }}" method="post">
                     @csrf

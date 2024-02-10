@@ -22,11 +22,21 @@
                 <label for="category">Category: </label>
                 <select class="form-select" name="category_id">
                     <option>Select a Category:</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
                     </ul>
                 </select>
+                <label class='form-label  mt-3' for="tags">Tags: </label>
+                <br>
+                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                    @foreach ($tags as $tag)
+                        <input type="checkbox" class="btn-check" id="{{ $tag->id }}" autocomplete="off" name="tags[]" value="{{ $tag->id }}">
+                        <label class="btn btn-outline-primary" for="{{ $tag->id }}">{{ $tag->name }}</label>
+                    @endforeach
+                </div>
+                <br>
+
                 <label for="slug">Slug: </label>
                 <input class="form-control" type="text" id="title" name="slug" data-parsley-required="">
                 <label for="body">Post Body: </label>

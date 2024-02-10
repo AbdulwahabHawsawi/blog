@@ -16,6 +16,13 @@
                 <dd><a href="{{ url('blog/'.$post->slug)}}">{{ url('blog/'.$post->slug) }}</a></dd>
                 <dt>Category</dt>
                 <dd>{{ $post->category->name }}</dd>
+                <dt>Tags</dt>
+
+                <dd>
+                    @foreach ($post->tags as $tag)
+                    {{$tag->name}}{{$tag->name == $post->tags->last()->name ? '' : ', '}}
+                    @endforeach
+                </dd>
                 <dt>Posted On:</dt>
                 <dd>{{ DateTime::CreateFromFormat('Y-m-d G:i:s',$post->created_at)->format('o M. j | G:i') }}</dd>
                 <dt>Last Updated:</dt>
@@ -24,7 +31,7 @@
             <a class='btn btn-secondary btn-lg btn-block' href="{{ route('posts.index') }}">Go Back to All Posts</a>
             <a class="btn btn-primary btn-lg btn-block my-2"  href="{{ route('posts.edit', ['post' => $post->id]) }}">Edit</a>
 
-            <form id='deleteForm' method='POST' action="{{ route('posts.destroy', ['post' => $post->id]) }}">
+            <form id='deletePost' method='POST' action="{{ route('posts.destroy', ['post' => $post->id]) }}">
                 @method("DELETE")
                 @csrf
             </form>

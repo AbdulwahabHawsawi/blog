@@ -19,8 +19,8 @@
             @foreach ($posts as $post)
             <h2>{{ $post->title }}</h2>
             <p>
-                {{ substr($post->body, 0, 50) }}
-                {{ $post->body > 50 ? "..." : "" }}
+                {{ strip_tags(substr($post->body, 0, 50)) }}
+                {{ strip_tags($post->body) > 50 ? "..." : "" }}
             </p>
             <a class="btn btn-primary" href="{{ url('blog/'.$post->slug) }}">Read More</a>
             @endforeach

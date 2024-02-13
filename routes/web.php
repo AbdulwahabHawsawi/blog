@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\BlogController;
@@ -52,3 +53,10 @@ Route::resource('categories', CategoryController::class, ['except' => ['create']
 
 //tags
 Route::resource('tags', TagController::class, ['except' => ['create']]);
+
+//comments
+Route::post('comments/{post_id}', [CommentController::class, 'postComment'])->name('comments.post');
+Route::get('comments/{comment_id}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+Route::PUT('comments/{comment_id}', [CommentController::class, 'update'])->name('comments.update');
+Route::get('confirm-delete/{comment_id}', [CommentController::class, 'confirmDelete'])->name('comments.delete');
+Route::delete('comments/{comment_id}/destroy', [CommentController::class, 'destroy'])->name('comments.destroy');

@@ -13,7 +13,7 @@
                     <div class="col-md-8 offset-md-1">
                         <h2>{{ $post->title }}</h2>
                         <h5>Published: {{DateTime::CreateFromFormat('Y-m-d G:i:s', $post->created_at)->format('o M. j | G:i')}}</h5>
-                        <p>{{ substr($post->body, 0, 75) }} {{ $post->body > 50 ? "..." : "" }}</p>
+                        <p>{{ strip_tags(substr($post->body, 0, 75)) }} {{ strip_tags($post->body) > 50 ? "..." : "" }}</p>
                         <a class='btn btn-primary' href="{{ route('blog.single', $post->slug) }}">Read More</a>
                     </div>
                     <hr class='my-4'>

@@ -31,7 +31,7 @@
                             <strong>{{ $post->id }}</strong>
                         </td>
                         <td>{{ $post->title }}</td>
-                        <td>{{ substr($post->body, 0, 50) }} {{ strlen($post->body) > 50 ? "..." : "" }}</td>
+                        <td>{{strip_tags(substr($post->body, 0, 50)) }} {{ strlen(strip_tags($post->body)) > 50 ? "..." : "" }}</td>
                         <td>{{DateTime::CreateFromFormat('Y-m-d G:i:s', $post->created_at)->format('M j, Y') }}</td>
                         <td>
                             <a class="btn btn-light" href="{{ route('posts.show', ['post' => $post->id]) }}">View</a>

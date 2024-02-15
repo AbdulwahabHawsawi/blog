@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
+use Mews\Purifier\Facades\Purifier;
 use Session;
 use Illuminate\Validation\Rule;
 
@@ -62,7 +63,7 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->slug = $request->slug;
         $post->body = $request->body;
-        $post->category_id = $request->category_id;
+        $post->category_id = Purifier::clean($request->category_id);
 
         $post->save();
 
@@ -119,7 +120,7 @@ class PostController extends Controller
 
         $post->title = $request->title;
         $post->slug = $request->slug;
-        $post->body = $request->body;
+        $post->body = Purifier::clean($request->body);
         $post->category_id = $request->category_id;
 
         $post->save();

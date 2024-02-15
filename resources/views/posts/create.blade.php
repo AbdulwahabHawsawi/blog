@@ -8,7 +8,7 @@
 
 @section('scripts')
     <script src="{{ asset('js/parsley.js') }}"></script>
-    <script script src="https://cdn.tiny.cloud/1/dw3hfinkmbm6688wf7odq9zn43ux1noqkx4d7yh02xxtjq8y/tinymce/6/tinymce.min.js"
+    <script script src="https://cdn.tiny.cloud/1/{{ config('services.TinyMCE.key') }}/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script>
         tinymce.init({

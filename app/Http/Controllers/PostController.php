@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Intervention\Image\Drivers\Gd\Driver;
+
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
+use Intervention\Image\ImageManager;
 use Mews\Purifier\Facades\Purifier;
-use Session;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 
 class PostController extends Controller
@@ -48,7 +51,8 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'category_id' => 'required|integer',
             'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
-            'body' => 'required'
+            'body' => 'required',
+            'thumbnail' => 'sometimes|image'
         ]);
 
         //store data
@@ -64,6 +68,18 @@ class PostController extends Controller
         $post->slug = $request->slug;
         $post->body = $request->body;
         $post->category_id = Purifier::clean($request->category_id);
+
+        if ($request->hasFile('thumbnail')) {
+            $image = $request->file('thumbnail');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/' . $filename);
+
+            $imageManager = ImageManager::gd();
+
+            $imageManager->read($image)->scaleDown(400)->save($location);
+
+            $post->image = $filename;
+        }
 
         $post->save();
 
@@ -115,7 +131,8 @@ class PostController extends Controller
                 Rule::when($slugChanged, 'unique')
             ],
             'category_id' => 'required|integer',
-            'body' => 'required'
+            'body' => 'required',
+            'thumbnail' => 'sometimes|image'
         ]);
 
         $post->title = $request->title;
@@ -123,9 +140,26 @@ class PostController extends Controller
         $post->body = Purifier::clean($request->body);
         $post->category_id = $request->category_id;
 
+        if ($request->hasFile('thumbnail')) {
+            $image = $request->file('thumbnail');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/' . $filename);
+
+            $imageManager = ImageManager::gd();
+
+            $imageManager->read($image)->scaleDown(400)->save($location);
+
+            $oldFilename = $post->image;
+
+            $post->image = $filename;
+
+            Storage::disk('uploaded_images')->delete($oldFilename);
+        }
+
         $post->save();
 
         $post->tags()->sync($request->tags);
+
 
         return redirect()->route('posts.show', ['post' => $id])->with('success', 'the post has been updated successfully!');
     }
@@ -138,6 +172,8 @@ class PostController extends Controller
         $post = Post::find($id);
 
         $post->tags()->detach();
+
+        Storage::disk('uploaded_images')->delete($post->image);
 
         $post->delete();
 

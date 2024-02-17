@@ -37,7 +37,7 @@
         <div class="col-md-8 offset-md-2">
             <h1>Create New Post</h1>
             <hr>
-            <form method='POST' action="{{ route('posts.store') }}" data-parsley-validate>
+            <form method='POST' action="{{ route('posts.store') }}" enctype="multipart/form-data" data-parsley-validate>
                 @csrf
                 <label for="title">Title: </label>
                 <input class="form-control" type="text" id="title" name="title" data-parsley-required="">
@@ -61,7 +61,11 @@
                 <br>
 
                 <label for="slug">Slug: </label>
-                <input class="form-control" type="text" id="title" name="slug" data-parsley-required="">
+                <input class="form-control mb-3" type="text" id="title" name="slug" data-parsley-required="">
+
+                <label for="thumbnail ">Thumbnail: </label>
+                <input class="form-control mb-3" type="file" id="thumbnail" name="thumbnail" data-parsley-required="">
+
                 <label for="body">Post Body: </label>
                 <textarea class="form-control" rows=20 name="body" id="body" data-parsley-required=""></textarea>
                 <div class="d-grid gap-2 my-3">

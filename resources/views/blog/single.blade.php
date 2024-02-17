@@ -6,6 +6,7 @@
 
     <div class="row">
         <div class="col-md-10 offset-md-1">
+            <img src="{{ asset('images/' . $post->image) }}" alt="">
             <h1>{{ $post->title }}</h1>
             <div class="row">
                 <div class="col-md-6">

@@ -34,7 +34,7 @@
                 <div class="col-md-8 offset-md-2">
                     <h1>Edit Post</h1>
                     <hr>
-                    <form method='POST' action="{{ route('posts.update', ['post' => $post->id]) }}" id="submitForm"
+                    <form method='POST' action="{{ route('posts.update', ['post' => $post->id]) }}" enctype="multipart/form-data" id="submitForm"
                         data-parsley-validate>
                         @csrf
                         @method('PUT')
@@ -58,7 +58,8 @@
                                 <input type="checkbox" class="btn-check" id="{{ $tag->id }}" autocomplete="off"
                                     name="tags[]" value="{{ $tag->id }}"
                                     {{ in_array($tag->id, $post_tag_ids) ? 'checked' : '' }}>
-                                <label class="btn btn-outline-primary" for="{{ $tag->id }}">{{ $tag->name }}</label>
+                                <label class="btn btn-outline-primary"
+                                    for="{{ $tag->id }}">{{ $tag->name }}</label>
                             @endforeach
                         </div>
                         <br>
@@ -75,6 +76,11 @@
                         <label for="slug">Slug: </label>
                         <input class="form-control" type="text" id="slug" name="slug"
                             value='{{ $post->slug }}'>
+
+                        <label for="thumbnail ">Thumbnail: </label>
+                        <input class="form-control mb-3" type="file" id="thumbnail" name="thumbnail"
+                            data-parsley-required="">
+
                         <label for="body">Post Body: </label>
                         <textarea class="form-control" rows=20 name="body" id="body" data-parsley-required="">{{ $post->body }}</textarea>
                         <div class="d-grid gap-2 my-3">
